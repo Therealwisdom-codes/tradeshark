@@ -42,7 +42,6 @@ interface UserSidebarProps {
   onToggleAccountType: (type: 'real' | 'virtual') => void;
   positionsCount: number;
   unreadEmailsCount: number;
-  onOpenAdminPortal?: () => void;
   onLogout?: () => void;
   onClose: () => void;
 }
@@ -55,7 +54,6 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
   onToggleAccountType,
   positionsCount,
   unreadEmailsCount,
-  onOpenAdminPortal,
   onLogout,
   onClose
 }) => {
@@ -269,19 +267,7 @@ export const UserSidebar: React.FC<UserSidebarProps> = ({
 
       {/* Bottom Switcher & Return Links */}
       <div className="p-3 border-t border-white/10 bg-[#10120a] space-y-1.5 text-xs">
-        {onOpenAdminPortal && (
-          <button
-            onClick={onOpenAdminPortal}
-            className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 hover:bg-yellow-400/20 text-white/80 hover:text-yellow-400 border border-white/10 transition-colors"
-            title="Open Admin Console (/#admin)"
-          >
-            <div className="flex items-center gap-2">
-              <ShieldAlert className="w-3.5 h-3.5 text-yellow-400" />
-              <span className="font-semibold text-[11px]">Admin Console</span>
-            </div>
-            <span className="text-[10px] font-mono text-white/40">/#admin</span>
-          </button>
-        )}
+
 
         {onLogout && (
           <button

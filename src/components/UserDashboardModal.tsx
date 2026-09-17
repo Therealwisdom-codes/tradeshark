@@ -41,14 +41,12 @@ interface UserDashboardModalProps {
   onClose: () => void;
   user?: { name: string; email: string } | null;
   onOpenTrade: (symbol: string) => void;
-  onOpenAdminPortal?: () => void;
 }
 
 export const UserDashboardModal: React.FC<UserDashboardModalProps> = ({
   isOpen,
   onClose,
-  onOpenTrade,
-  onOpenAdminPortal
+  onOpenTrade
 }) => {
   if (!isOpen) return null;
 
@@ -232,7 +230,6 @@ export const UserDashboardModal: React.FC<UserDashboardModalProps> = ({
           onToggleAccountType={setAccountType}
           positionsCount={userPositions.length}
           unreadEmailsCount={unreadEmailsCount}
-          onOpenAdminPortal={onOpenAdminPortal}
           onLogout={handleLogout}
           onClose={onClose}
         />
@@ -275,16 +272,7 @@ export const UserDashboardModal: React.FC<UserDashboardModalProps> = ({
                 )}
               </button>
 
-              {onOpenAdminPortal && (
-                <button
-                  onClick={onOpenAdminPortal}
-                  className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-yellow-400/20 text-white/80 hover:text-yellow-400 border border-white/10 text-xs font-semibold transition-colors"
-                  title="Switch to Admin Portal (/#admin)"
-                >
-                  <ShieldAlert className="w-3.5 h-3.5 text-yellow-400" />
-                  <span>Admin Console</span>
-                </button>
-              )}
+
 
               {/* Sign Out Button */}
               <button

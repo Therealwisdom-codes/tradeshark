@@ -793,8 +793,10 @@ export const BrokerageProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const rejectFunding = (txId: string, reason: string) => {
+    let rejectedTx: FundingTransaction | undefined;
     setTransactions(prev => prev.map(tx => {
       if (tx.id === txId && tx.status === 'Pending Approval') {
+        rejectedTx = tx;
         // If a withdrawal was rejected, return reserved balance back to user
         if (tx.type === 'Withdrawal') {
           setUsers(uList => uList.map(u => {
@@ -816,6 +818,29 @@ export const BrokerageProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       }
       return tx;
     }));
+
+    // Email notification to user about funding rejection
+    if (rejectedTx) {
+      const tx = rejectedTx;
+      const targetUser = users.find(u => u.id === tx.userId);
+      if (targetUser) {
+        sendEmail({
+          from: 'TradeShark Treasury Desk <treasury@tradeshark.co.uk>',
+          to: targetUser.email,
+          userId: targetUser.id,
+          userName: targetUser.name,
+          subject: tx.type === 'Deposit'
+            ? `Deposit Declined: $${tx.amount.toLocaleString()} via ${tx.method}`
+            : `Withdrawal Declined: $${tx.amount.toLocaleString()} via ${tx.method}`,
+          body: tx.type === 'Deposit'
+            ? `Dear ${targetUser.name},\n\nUnfortunately, your deposit request of $${tx.amount.toLocaleString()} via ${tx.method} has been declined by our compliance team.\n\nReason: ${reason}\n\nReference: ${tx.reference}\n\nIf you believe this is an error, please contact our support team at support@tradeshark.co.uk or reach out to your assigned account manager.\n\nTradeShark Treasury Operations`
+            : `Dear ${targetUser.name},\n\nYour withdrawal request of $${tx.amount.toLocaleString()} via ${tx.method} has been declined.\n\nReason: ${reason}\n\nReference: ${tx.reference}\n\nThe reserved funds ($${tx.amount.toLocaleString()}) have been returned to your available balance. If you have questions about this decision, please contact compliance@tradeshark.co.uk.\n\nTradeShark Cashier & Disbursement Desk`,
+          category: 'FUNDING',
+          priority: 'Urgent',
+          direction: 'outbound'
+        });
+      }
+    }
   };
 
   // 9. Manual Balance Adjustments (Admin Direct Credit/Debit/Bonus)
@@ -883,6 +908,19 @@ export const BrokerageProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       'FUNDING', 
       currentUser.name
     );
+
+    // Email notification to user confirming deposit request received
+    sendEmail({
+      from: 'TradeShark Treasury Desk <treasury@tradeshark.co.uk>',
+      to: currentUser.email,
+      userId: currentUser.id,
+      userName: currentUser.name,
+      subject: `Deposit Request Received: $${amount.toLocaleString()} via ${method}`,
+      body: `Dear ${currentUser.name},\n\nWe have received your deposit request for $${amount.toLocaleString()} via ${method}.\n\nReference: ${tx.reference}\n\nYour deposit is now pending compliance review and clearance by our Treasury Operations team. You will receive a confirmation email once your funds have been credited to your live balance.\n\nEstimated processing time:\n- Bank Wire: 1-3 business days\n- Crypto: 30 minutes to 2 hours (after network confirmations)\n- Card: Instant to 24 hours\n\nThank you for choosing TradeShark Ltd.\n\nTradeShark Treasury Operations\n100 Bishopsgate, London EC2N 4AG`,
+      category: 'FUNDING',
+      priority: 'Normal',
+      direction: 'outbound'
+    });
   };
 
   // 11. User Side: Submit Withdrawal
@@ -920,6 +958,19 @@ export const BrokerageProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       'FUNDING', 
       currentUser.name
     );
+
+    // Email notification to user confirming withdrawal request received
+    sendEmail({
+      from: 'TradeShark Treasury Desk <treasury@tradeshark.co.uk>',
+      to: currentUser.email,
+      userId: currentUser.id,
+      userName: currentUser.name,
+      subject: `Withdrawal Request Submitted: $${amount.toLocaleString()} via ${method}`,
+      body: `Dear ${currentUser.name},\n\nYour withdrawal request has been received and is now pending authorization.\n\nDetails:\n- Amount: $${amount.toLocaleString()}\n- Method: ${method}\n- Destination: ${destination}\n- Reference: ${tx.reference}\n\nFunds have been reserved in escrow and will be released upon compliance approval. Withdrawals are typically processed within 1-3 business days.\n\nIf you did not initiate this request, please contact our support team immediately at support@tradeshark.co.uk.\n\nTradeShark Cashier & Disbursement Desk\n100 Bishopsgate, London EC2N 4AG`,
+      category: 'FUNDING',
+      priority: 'High',
+      direction: 'outbound'
+    });
 
     return true;
   };

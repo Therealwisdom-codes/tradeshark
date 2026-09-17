@@ -21,8 +21,6 @@ interface HeaderProps {
   onOpenSearch: () => void;
   onOpenAuth: (mode: 'login' | 'signup') => void;
   onOpenUserDashboard?: () => void;
-  onOpenAdminPortal?: () => void;
-  onOpenQuickLogins?: () => void;
   currentUser?: { name: string; email: string } | null;
 }
 
@@ -30,8 +28,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSearch, 
   onOpenAuth,
   onOpenUserDashboard,
-  onOpenAdminPortal,
-  onOpenQuickLogins,
   currentUser
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
