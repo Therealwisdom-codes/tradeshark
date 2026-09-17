@@ -356,45 +356,6 @@ export const UserLoginGate: React.FC<UserLoginGateProps> = ({
                 </>
               )}
             </button>
-
-            {/* Quick-Fill Demo Client Accounts */}
-            <div className="mt-3 pt-3 border-t border-white/10 space-y-1.5">
-              <div className="flex items-center justify-between text-[11px] text-white/60">
-                <span className="font-semibold text-white/80">Available Client Accounts:</span>
-                <span className="text-[10px] text-[#6dff8a]">Click to autofill</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { name: 'Alex Mercer', email: 'alex.m@gmail.com', pass: 'trader123', tier: 'Tier 2 Pro ($104k)' },
-                  { name: 'Sarah Jenkins', email: 'sjenkins@techcorp.io', pass: 'vip123', tier: 'Tier 3 VIP ($423k)' },
-                  { name: 'Liam Chen', email: 'liam.chen@outlook.com', pass: 'trader123', tier: 'Tier 1 Standard ($15k)' },
-                  { name: 'Tariq Al-Mansoor', email: 't.mansoor@gulfcap.ae', pass: 'vip123', tier: 'Tier 3 VIP ($850k)' }
-                ].map((acc, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setLoginIdentifier(acc.email);
-                      setLoginPassword(acc.pass);
-                      setErrorMessage(null);
-                    }}
-                    className={`p-2 rounded-xl text-left border transition-all cursor-pointer ${
-                      loginIdentifier.toLowerCase() === acc.email.toLowerCase()
-                        ? 'bg-[#6dff8a]/15 border-[#6dff8a] text-white'
-                        : 'bg-black/40 border-white/10 hover:border-white/20 text-white/80 hover:text-white'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between text-[11px] font-bold text-white">
-                      <span>{acc.name}</span>
-                      <span className="text-[9px] text-[#6dff8a] font-mono">{acc.pass}</span>
-                    </div>
-                    <div className="text-[10px] text-[#6dff8a] font-mono truncate">{acc.email}</div>
-                    <div className="text-[9px] text-white/40">{acc.tier}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
           </form>
         ) : (
           /* Mode 2: REGISTER FORM */

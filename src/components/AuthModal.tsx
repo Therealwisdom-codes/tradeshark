@@ -341,36 +341,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 </button>
               </form>
 
-              {/* Demo Accounts Quick-Fill Helper for Login */}
-              {mode === 'login' && (
-                <div className="pt-2 border-t border-white/10 space-y-1.5">
-                  <div className="flex items-center justify-between text-[11px] text-white/60">
-                    <span className="font-semibold text-white/80">Available Accounts:</span>
-                    <span className="text-[10px] text-[#6dff8a]">Click to autofill</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {[
-                      { name: 'Alex Mercer (Pro)', email: 'alex.m@gmail.com', pass: 'trader123' },
-                      { name: 'Sarah Jenkins (VIP)', email: 'sjenkins@techcorp.io', pass: 'vip123' }
-                    ].map((acc, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => {
-                          setEmail(acc.email);
-                          setPassword(acc.pass);
-                          setErrorMessage(null);
-                        }}
-                        className="p-1.5 rounded-lg bg-black/40 border border-white/10 hover:border-[#6dff8a]/40 text-left transition-all text-xs"
-                      >
-                        <div className="font-semibold text-white text-[11px] truncate">{acc.name}</div>
-                        <div className="text-[10px] text-[#6dff8a] font-mono truncate">{acc.email}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Toggle login / signup */}
               <div className="text-center text-xs text-[#a3a89e] pt-1">
                 {mode === 'signup' ? (

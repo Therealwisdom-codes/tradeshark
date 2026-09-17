@@ -236,37 +236,6 @@ export const AdminLoginGate: React.FC<AdminLoginGateProps> = ({
             )}
           </button>
         </form>
-
-        {/* Quick Fill Credentials Helper */}
-        <div className="mt-4 pt-3.5 border-t border-white/10 space-y-2">
-          <div className="flex items-center justify-between text-[11px] text-white/60">
-            <span className="font-semibold text-white/80">Authorized Staff Desks:</span>
-            <span className="text-[10px] text-[#6dff8a]">Click to autofill</span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-1.5">
-            {VALID_ACCOUNTS.map((acc, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => {
-                  setUsername(acc.username);
-                  setPassword(acc.password);
-                  setErrorMessage(null);
-                }}
-                className={`p-2 rounded-xl text-left border transition-all cursor-pointer ${
-                  username.toLowerCase() === acc.username.toLowerCase()
-                    ? 'bg-[#6dff8a]/15 border-[#6dff8a] text-white'
-                    : 'bg-black/40 border-white/10 hover:border-white/20 text-white/80 hover:text-white'
-                }`}
-              >
-                <div className="font-mono text-[11px] font-bold text-[#6dff8a] truncate">{acc.username}</div>
-                <div className="text-[10px] text-white/50 truncate">{acc.password}</div>
-                <div className="text-[9px] text-white/40 truncate">{acc.role.split(' ')[0]}</div>
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
