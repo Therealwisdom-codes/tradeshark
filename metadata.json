@@ -1,0 +1,6 @@
+{
+  "name": "TradeShark Ltd",
+  "description": "TradeShark Ltd - Global multi-asset trading platform with zero commission stocks, crypto, ETFs, currencies, copy trading, and AI intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
