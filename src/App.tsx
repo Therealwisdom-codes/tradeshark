@@ -57,12 +57,19 @@ export default function App() {
         setIsAdminPortalOpen(true);
         setIsUserDashboardOpen(false);
       } else if (
+        hash.startsWith('#login') ||
         hash.startsWith('#user') || 
         hash.startsWith('#dashboard') || 
+        hash.startsWith('#portal') ||
+        path.startsWith('/login') || 
         path.startsWith('/user') || 
-        path.startsWith('/dashboard')
+        path.startsWith('/dashboard') ||
+        path.startsWith('/portal')
       ) {
         setIsUserDashboardOpen(true);
+        setIsAdminPortalOpen(false);
+      } else {
+        setIsUserDashboardOpen(false);
         setIsAdminPortalOpen(false);
       }
     };
@@ -137,9 +144,13 @@ export default function App() {
     setIsUserDashboardOpen(false);
     if (
       window.location.hash.includes('user') || 
+      window.location.hash.includes('login') ||
       window.location.hash.includes('dashboard') ||
+      window.location.hash.includes('portal') ||
       window.location.pathname.includes('/user') ||
-      window.location.pathname.includes('/dashboard')
+      window.location.pathname.includes('/login') ||
+      window.location.pathname.includes('/dashboard') ||
+      window.location.pathname.includes('/portal')
     ) {
       history.replaceState(null, '', '/');
     }
@@ -214,13 +225,11 @@ export default function App() {
         </div>
       )}
 
-      {/* Main Navigation Header */}
+      {/* Main Navigation Header (Clean Public Front-End with NO login buttons) */}
       <Header
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenAuth={(mode) => setAuthModal({ isOpen: true, mode })}
         onOpenUserDashboard={handleOpenUserDashboard}
-        onOpenAdminPortal={handleOpenAdminPortal}
-        onOpenQuickLogins={() => setIsQuickLoginsOpen(true)}
         currentUser={currentUser}
       />
 
@@ -270,10 +279,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer 
-        onOpenUserDashboard={handleOpenUserDashboard}
-        onOpenAdminPortal={handleOpenAdminPortal}
-      />
+      <Footer />
 
       {/* Floating AI Assistant Trigger Button */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">

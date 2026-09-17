@@ -17,9 +17,17 @@ TradeShark has been upgraded from a Vercel static deployment to a full productio
 | **`package.json`** | Added production start script: `"start": "node server.js"`. |
 | **`vercel.json`** | Removed to prevent platform conflicts. |
 
+## 2. Dedicated Portal Links (Separated from Frontend)
+
+The front-end website header and footer are clean public marketing pages with all login/admin desk triggers removed. Use these dedicated URLs to access the respective portals:
+
+* **Public Marketing Website:** `https://your-domain.up.railway.app/`
+* **Client / User Login Portal:** `https://your-domain.up.railway.app/#login` (or `/#user`, `/login`)
+* **Institutional Admin Back-Office:** `https://your-domain.up.railway.app/#admin` (or `/admin`)
+
 ---
 
-## 2. Initialize Git & Push to GitHub (One-Time Setup)
+## 3. Initialize Git & Push to GitHub (One-Time Setup)
 
 Since you don't currently have a Git repository for this project, run these commands in your project root (`c:\Users\USER\Documents\tradesharkltd-main\tradesharkltd-main`):
 

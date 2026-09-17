@@ -316,34 +316,8 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </div>
 
-          {/* Quick Access: All Logins & Keys */}
-          {onOpenQuickLogins && (
-            <button
-              onClick={onOpenQuickLogins}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-[#6dff8a] bg-[#6dff8a]/10 hover:bg-[#6dff8a]/20 border border-[#6dff8a]/40 rounded-full transition-all cursor-pointer shadow-[0_0_12px_rgba(109,255,138,0.15)]"
-              title="View all demo accounts & passwords for Admin and User portals"
-            >
-              <Key className="w-3.5 h-3.5" />
-              <span>All Logins</span>
-            </button>
-          )}
-
-          {/* Direct Admin Portal Trigger */}
-          {onOpenAdminPortal && (
-            <button
-              onClick={onOpenAdminPortal}
-              className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-full transition-all cursor-pointer"
-              title="Open Back-Office Admin & Institutional Desk"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Admin Desk</span>
-            </button>
-          )}
-
-          <div className="h-5 w-px bg-white/15 hidden sm:block"></div>
-
-          {/* Log In Button / User Avatar Button */}
-          {hasUserSession && currentUser ? (
+          {/* User Avatar Button (only visible if already authenticated) */}
+          {hasUserSession && currentUser && (
             <button
               onClick={onOpenUserDashboard}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-[#6dff8a]/40 text-xs font-semibold text-white transition-colors cursor-pointer"
@@ -352,14 +326,6 @@ export const Header: React.FC<HeaderProps> = ({
                 {currentUser.name.slice(0, 1).toUpperCase()}
               </span>
               <span className="hidden sm:inline">{currentUser.name}</span>
-            </button>
-          ) : (
-            <button 
-              id="header-login-btn"
-              onClick={() => onOpenAuth('login')}
-              className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold text-white hover:text-[#6dff8a] bg-transparent border border-white/20 hover:border-[#6dff8a]/50 rounded-full transition-all cursor-pointer"
-            >
-              Log in
             </button>
           )}
 
@@ -410,47 +376,12 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="pt-4 flex flex-col gap-3">
-              {onOpenQuickLogins && (
-                <button 
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenQuickLogins();
-                  }}
-                  className="w-full py-2.5 text-xs font-bold text-[#6dff8a] bg-[#6dff8a]/10 border border-[#6dff8a]/40 rounded-xl flex items-center justify-center gap-2"
-                >
-                  <Key className="w-3.5 h-3.5" />
-                  <span>View All Logins &amp; Access Keys</span>
-                </button>
-              )}
-
-              {onOpenAdminPortal && (
-                <button 
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenAdminPortal();
-                  }}
-                  className="w-full py-2.5 text-xs font-bold text-red-400 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center justify-center gap-2"
-                >
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Institutional Admin Portal</span>
-                </button>
-              )}
-
-              <button 
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAuth('login');
-                }}
-                className="w-full py-3 text-sm font-semibold text-white border border-white/20 rounded-full"
-              >
-                Log in
-              </button>
               <button 
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenAuth('signup');
                 }}
-                className="w-full py-3 text-sm font-bold text-[#15170f] bg-[#6dff8a] rounded-full"
+                className="w-full py-3 text-sm font-bold text-[#15170f] bg-[#6dff8a] rounded-full shadow-[0_0_20px_rgba(109,255,138,0.25)]"
               >
                 Start Investing
               </button>
